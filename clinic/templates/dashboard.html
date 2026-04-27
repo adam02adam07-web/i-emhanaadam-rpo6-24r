@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Дашборд | i-emhana{% endblock %}
+
+{% block content %}
+  <div class="row mb-4">
+    <div class="col-md-6 col-lg-4 mb-3">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body d-flex align-items-center">
+          <div class="me-3"><i class="fa-solid fa-users fa-3x"></i></div>
+          <div>
+            <h5 class="card-title mb-0">Всего пациентов</h5>
+            <h2 class="display-6 fw-bold mb-0">{{ total_patients }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4 mb-3">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body d-flex align-items-center">
+          <div class="me-3"><i class="fa-regular fa-clock fa-3x"></i></div>
+          <div>
+            <h5 class="card-title mb-0">Ожидают приема</h5>
+            <h2 class="display-6 fw-bold mb-0">{{ pending_appointments }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-lg-7">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-header bg-white">
+          <h5 class="mb-0"><i class="fa-solid fa-chart-line me-2"></i>Динамика приемов (7 дней)</h5>
+        </div>
+        <div class="card-body">
+          <script id="dates-json" type="application/json">{{ dates_json|safe }}</script>
+          <script id="counts-json" type="application/json">{{ counts_json|safe }}</script>
+          <canvas id="appointmentsChart" height="120"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-5">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-header bg-white">
+          <h5 class="mb-0"><i class="fa-solid fa-chart-pie me-2"></i>Статусы приемов</h5>
+        </div>
+        <div class="card-body">
+          <script id="status-counts-json" type="application/json">{{ status_counts_json|safe }}</script>
+          <canvas id="statusChart" height="170"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0 mt-3">
+    <div class="card-header bg-white">
+      <h5 class="mb-0"><i class="fa-solid fa-bolt me-2"></i>Быстрые действия</h5>
+    </div>
+    <div class="card-body d-flex flex-wrap gap-2">
+      <a class="btn btn-warning" href="{% url 'clinic:appointment_create' %}">
+        <i class="fa-solid fa-plus me-1"></i>Создать прием
+      </a>
+      <a class="btn btn-outline-secondary" href="{% url 'clinic:appointment_list' %}">
+        <i class="fa-solid fa-list me-1"></i>Открыть список приемов
+      </a>
+      <a class="btn btn-outline-primary" href="/admin/" target="_blank" rel="noopener">
+        <i class="fa-solid fa-gear me-1"></i>Открыть админ-панель
+      </a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const ctx = document.getElementById('appointmentsChart').getContext('2d');
+    const labels = JSON.parse(document.getElementById("dates-json").textContent);
+    const counts = JSON.parse(document.getElementById("counts-json").textContent);
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Приемы',
+          data: counts,
+          borderColor: '#0d6efd',
+          backgroundColor: 'rgba(13, 110, 253, 0.1)',
+          borderWidth: 2, fill: true, tension: 0.4
+        }]
+      },
+      options: {
+        plugins: {
+          legend: { display: false },
+        },
+        scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+      }
+    });
+
+    const statusCounts = JSON.parse(document.getElementById("status-counts-json").textContent);
+    const statusCtx = document.getElementById("statusChart").getContext("2d");
+    new Chart(statusCtx, {
+      type: "doughnut",
+      data: {
+        labels: ["Ожидает", "Завершен", "Отменен"],
+        datasets: [
+          {
+            data: statusCounts,
+            backgroundColor: ["#ffc107", "#198754", "#6c757d"],
+            borderWidth: 0,
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          legend: { position: "bottom" },
+        },
+        cutout: "60%",
+      },
+    });
+  });
+</script>
+{% endblock %}

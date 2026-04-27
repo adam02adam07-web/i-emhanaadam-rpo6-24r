@@ -1,0 +1,112 @@
+{
+  "patients": [
+    { "iin": "850115300001", "full_name": "Ахметов Азамат Ахметович", "phone": "+7 701 111 22 33" },
+    { "iin": "920520400002", "full_name": "Оспанова Айгерим Сериковна", "phone": "+7 702 222 33 44" },
+    { "iin": "900101300003", "full_name": "Серикбаев Данияр Ерланович", "phone": "+7 705 123 45 67" },
+    { "iin": "870305400004", "full_name": "Касымова Жанар Нурлановна", "phone": "+7 701 333 44 55" },
+    { "iin": "950712300005", "full_name": "Имангалиева Асем Сериковна", "phone": "+7 747 555 66 77" },
+    { "iin": "881120400006", "full_name": "Ермеков Арман Талгатович", "phone": "+7 702 777 88 99" },
+    { "iin": "910430300007", "full_name": "Тлеубаева Мадина Канатовна", "phone": "+7 776 111 22 33" },
+    { "iin": "990215400008", "full_name": "Садыков Нурсултан Жандосович", "phone": "+7 701 222 33 44" },
+    { "iin": "860808300009", "full_name": "Бекжанова Аружан Даулетовна", "phone": "+7 702 444 55 66" },
+    { "iin": "930927400010", "full_name": "Турсынов Ерасыл Болатович", "phone": "+7 707 888 99 00" },
+    { "iin": "890614300011", "full_name": "Калиева Алина Рустемовна", "phone": "+7 747 101 20 30" },
+    { "iin": "970103400012", "full_name": "Абдрахманов Тимур Саматович", "phone": "+7 705 404 50 60" },
+    { "iin": "840519300013", "full_name": "Нурмуханбетова Айша Ермековна", "phone": "+7 701 909 80 70" },
+    { "iin": "920911400014", "full_name": "Кожахметов Руслан Нурланович", "phone": "+7 702 606 70 80" },
+    { "iin": "880226300015", "full_name": "Омарова Диана Армановна", "phone": "+7 707 303 40 50" },
+    { "iin": "960715400016", "full_name": "Мусин Ильяс Бауыржанович", "phone": "+7 747 808 90 10" },
+    { "iin": "910823300017", "full_name": "Смагулова Гульнур Аскаровна", "phone": "+7 701 111 44 55" },
+    { "iin": "990602400018", "full_name": "Исмаилов Санжар Рамазанович", "phone": "+7 702 222 55 66" },
+    { "iin": "850329300019", "full_name": "Жумабаева Сауле Талгатовна", "phone": "+7 707 333 66 77" },
+    { "iin": "940118400020", "full_name": "Сапаров Нияз Ержанович", "phone": "+7 747 444 77 88" }
+  ],
+  "doctors": [
+    {
+      "username": "doc_terapevt",
+      "password": "docpassword123",
+      "first_name": "Алия",
+      "last_name": "Смагулова",
+      "specialty": "Терапевт"
+    },
+    {
+      "username": "doc_pediatr",
+      "password": "docpassword123",
+      "first_name": "Ерке",
+      "last_name": "Нурланова",
+      "specialty": "Педиатр"
+    },
+    {
+      "username": "doc_hirurg",
+      "password": "docpassword123",
+      "first_name": "Бауыржан",
+      "last_name": "Ермеков",
+      "specialty": "Хирург"
+    },
+    {
+      "username": "doc_kardiolog",
+      "password": "docpassword123",
+      "first_name": "Дамир",
+      "last_name": "Сериков",
+      "specialty": "Кардиолог"
+    },
+    {
+      "username": "doc_lor",
+      "password": "docpassword123",
+      "first_name": "Айдана",
+      "last_name": "Тлеубаева",
+      "specialty": "ЛОР"
+    }
+  ],
+  "appointments": [
+    {
+      "patient_iin": "850115300001",
+      "doctor_username": "doc_terapevt",
+      "date_time": "2026-04-21T09:00:00Z",
+      "status": "completed",
+      "notes": "Первичный осмотр."
+    },
+    {
+      "patient_iin": "920520400002",
+      "doctor_username": "doc_kardiolog",
+      "date_time": "2026-04-22T10:30:00Z",
+      "status": "pending",
+      "notes": "Жалобы на давление."
+    },
+    {
+      "patient_iin": "900101300003",
+      "doctor_username": "doc_lor",
+      "date_time": "2026-04-23T08:15:00Z",
+      "status": "completed",
+      "notes": "Боль в горле, кашель."
+    },
+    {
+      "patient_iin": "870305400004",
+      "doctor_username": "doc_pediatr",
+      "date_time": "2026-04-23T11:00:00Z",
+      "status": "pending",
+      "notes": "Осмотр ребенка."
+    },
+    {
+      "patient_iin": "950712300005",
+      "doctor_username": "doc_hirurg",
+      "date_time": "2026-04-24T14:45:00Z",
+      "status": "cancelled",
+      "notes": "Пациент отменил запись."
+    },
+    {
+      "patient_iin": "881120400006",
+      "doctor_username": "doc_terapevt",
+      "date_time": "2026-04-25T09:20:00Z",
+      "status": "completed",
+      "notes": "Повторный прием."
+    },
+    {
+      "patient_iin": "910430300007",
+      "doctor_username": "doc_kardiolog",
+      "date_time": "2026-04-26T12:10:00Z",
+      "status": "pending",
+      "notes": "ЭКГ и консультация."
+    }
+  ]
+}

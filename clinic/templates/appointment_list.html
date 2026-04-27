@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Приемы | i-emhana{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h4 fw-bold mb-0">Список приемов</h1>
+    <a class="btn btn-warning" href="{% url 'clinic:appointment_create' %}">+ Новый прием</a>
+  </div>
+
+  <div class="card border-0 shadow-sm mb-3">
+    <div class="card-body">
+      <form method="get" class="row g-2 align-items-end">
+        <div class="col-12 col-md-4">
+          <label class="form-label">Статус</label>
+          <select class="form-select" name="status">
+            <option value="" {% if not status_filter %}selected{% endif %}>Все</option>
+            <option value="pending" {% if status_filter == "pending" %}selected{% endif %}>Ожидает</option>
+            <option value="completed" {% if status_filter == "completed" %}selected{% endif %}>Завершен</option>
+            <option value="cancelled" {% if status_filter == "cancelled" %}selected{% endif %}>Отменен</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-4">
+          <label class="form-label">Врач</label>
+          <select class="form-select" name="doctor_id">
+            <option value="" {% if not doctor_filter %}selected{% endif %}>Все</option>
+            {% for d in doctors %}
+              <option value="{{ d.id }}" {% if doctor_filter == d.id|stringformat:"s" %}selected{% endif %}>
+                {{ d.user.get_full_name|default:d.user.username }} — {{ d.specialty }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-12 col-md-4 d-flex gap-2">
+          <button class="btn btn-outline-light w-100" type="submit">Фильтр</button>
+          <a class="btn btn-light w-100" href="{% url 'clinic:appointment_list' %}">Сброс</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="table-responsive">
+      <table class="table table-striped mb-0 align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Дата/время</th>
+            <th>Пациент</th>
+            <th>ИИН</th>
+            <th>Врач</th>
+            <th>Статус</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in appointments %}
+            <tr>
+              <td>{{ a.date_time|date:"d.m.Y H:i" }}</td>
+              <td>{{ a.patient.full_name }}</td>
+              <td>{{ a.patient.iin }}</td>
+              <td>{{ a.doctor.user.get_full_name|default:a.doctor.user.username }} — {{ a.doctor.specialty }}</td>
+              <td>
+                {% if a.status == "pending" %}
+                  <span class="badge text-bg-warning">Ожидает</span>
+                {% elif a.status == "completed" %}
+                  <span class="badge text-bg-success">Завершен</span>
+                {% elif a.status == "cancelled" %}
+                  <span class="badge text-bg-secondary">Отменен</span>
+                {% else %}
+                  <span class="badge text-bg-light">{{ a.status }}</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="5" class="text-center text-muted py-4">Пока нет приемов.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

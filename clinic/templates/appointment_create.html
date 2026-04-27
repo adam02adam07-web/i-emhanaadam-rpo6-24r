@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Новый прием | i-emhana{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h4 fw-bold mb-0">Создать прием</h1>
+    <a class="btn btn-outline-secondary" href="{% url 'clinic:appointment_list' %}">К списку</a>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="row g-3">
+          <div class="col-12 col-md-4">
+            <label class="form-label">ИИН</label>
+            <input class="form-control" name="iin" maxlength="12" required />
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label">ФИО</label>
+            <input class="form-control" name="full_name" required />
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label">Телефон</label>
+            <input class="form-control" name="phone" />
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label class="form-label">Врач</label>
+            <select class="form-select" name="doctor_id" required>
+              <option value="" selected disabled>Выберите врача</option>
+              {% for d in doctors %}
+                <option value="{{ d.id }}">
+                  {{ d.user.get_full_name|default:d.user.username }} — {{ d.specialty }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <label class="form-label">Дата и время</label>
+            <input class="form-control" type="datetime-local" name="date_time" required />
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Жалобы/Заметки</label>
+            <textarea class="form-control" name="notes" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-warning" type="submit">Сохранить</button>
+          <a class="btn btn-light" href="{% url 'clinic:appointment_list' %}">Отмена</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
